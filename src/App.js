@@ -42,17 +42,16 @@ const handleQuerySubmit = async (query) => {
 
   return (
     <div className="App">
-      <h1>Query Input</h1>
+      <div className="content">
+        {query1 && <div className="displayQuery"><h2>User</h2> {query1}</div>}
+        {loading && <div className="loader">Loading...</div>}
+        {!loading && response && (
+          <div className="displayResponse">
+            <ResponseDisplay response={response} reference={reference} />
+          </div>
+        )}
+      </div>
       <QueryInput onSubmit={handleQuerySubmit} />
-      {query1 && <div className='displayQuery'><h2>User</h2> {query1}</div>}
-      {loading && <div className="loader">Loading...</div>}
-      
-      {!loading && response && (
-        <div className='displayResponse'>
-        <ResponseDisplay response={response} reference={reference} />
-        </div>
-      )}
-      
     </div>
   );
 }

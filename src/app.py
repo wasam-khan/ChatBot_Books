@@ -109,11 +109,10 @@ def query_pdf(source_id, query, api_key):
 @app.route('/generate_response', methods=['POST'])
 def generate_response():
     
-    api_key = "sec_xJ86UNfF83CywriPTtJjWh9X6zF9YKKc"
-    print(12)
-    print(api_key)
+    api_key =  'sec_xJ86UNfF83CywriPTtJjWh9X6zF9YKKc'
+    # api_key = os.getenv('CHAT_PDF_API_KEY')
+    # print(api_key)
     if not api_key:
-        print(None)
         return jsonify({"error": "API key not found"}), 500
 
     pdf_paths = [
@@ -127,7 +126,6 @@ def generate_response():
     }
 
     file_path = 'uploaded_books.txt'
-    print(34)
     try:
         if os.path.exists(file_path):
             source_data = read_sources_from_file(file_path)

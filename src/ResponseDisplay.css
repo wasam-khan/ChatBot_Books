@@ -1,19 +1,20 @@
-.response-display {
+/* .response-display {
     text-align: center;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
   }
   
   h2 {
     color: #333;
-  }
+  } */
 
   .reference-link {
     text-decoration: none;
     color: inherit;
     margin-left: 5px; /* Space between response text and the reference */
-    vertical-align: super; /* Aligns the circle vertically */
-  }
+     vertical-align: super; }/* Aligns the circle vertically */
   
-  .reference-number {
+   .reference-number {
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -30,3 +31,36 @@
     background-color: #0056b3;
     cursor: pointer;
   }
+
+  /* p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    white-space: pre-wrap; /* Preserves white spaces and line breaks */
+
+  .response-display {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .response-display h2 {
+    margin: 0 0 10px;
+  }
+  
+  /* .reference-link {
+    margin-top: 10px;
+    vertical-align: super;
+  }
+  
+  .reference-link a {
+    color: #007BFF;
+    text-decoration: none;
+  }
+  
+  .reference-link a:hover {
+    text-decoration: underline;
+  } */
+  

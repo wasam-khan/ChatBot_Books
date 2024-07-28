@@ -37,7 +37,7 @@
   }
 } */
 
-.App {
+/* .App {
   text-align: center;
   margin-top: 50px;
 }
@@ -97,11 +97,17 @@ h1 {
 header {
   text-align: center;
   margin-bottom: 20px;
-}
+}*/
+
 .loader {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute; /* Position absolute to the relative parent */
+  top: 20%;
+  left: 50%;
+  /* transform: translate(-50%, -50%); */
+  text-align: center;
 }
 
 .loader:after {
@@ -123,4 +129,62 @@ header {
   100% {
     transform: rotate(360deg);
   }
+} 
+
+
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.displayQuery, .displayResponse {
+  margin-bottom: 20px;
+}
+
+.loader {
+  text-align: center;
+}
+
+.query-form {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  padding: 10px 20px;
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-container input {
+  width: 80%;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.button {
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+}
+
+.button svg {
+  fill: white;
 }
