@@ -1,0 +1,19 @@
+.audio-recorder {
+    display: flex;
+    align-items: center;
+    margin-left: 8px; /* Add margin to the audio recorder */
+  }
+  
+  .record-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    margin-left: 8px; /* Add margin between buttons if needed */
+  }
+  
+  .record-button svg {
+    width: 24px;
+    height: 24px;
+  }
+  

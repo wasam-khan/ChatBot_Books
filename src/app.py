@@ -5,10 +5,17 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from flask import Flask, request, jsonify, send_file, render_template
 import json
 from flask_cors import CORS
+import whisper
+from io import BytesIO
+from pydub import AudioSegment
+import tempfile
 
 
 app = Flask(__name__)
 CORS(app)
+
+
+model = whisper.load_model("base")
 
 def upload_pdf(pdf_path, api_key):
     files = [
@@ -153,6 +160,7 @@ def generate_response():
         most_relevant_response = None
         most_relevant_book_name = None
         highest_score = 0
+        most_relevant_URL = None
 
         for source_id in source_ids:
             try:
@@ -177,16 +185,54 @@ def generate_response():
 
         if most_relevant_response:
             if(most_relevant_book_name == 'The 7 Habits of Highly Effective People'):
-                most_relevant_book_name = 'https://ati.dae.gov.in/ati12052021_1.pdf'
+                most_relevant_URL = 'https://www.google.com/search?q=7-habits-of-highly-effective-people+pdf&sca_esv=eb02f0240770053f&sca_upv=1&rlz=1C1KNTJ_enPK1063PK1063&sxsrf=ADLYWIKZWiiGq6kKiKY-VPVCZQtdhjbOUw%3A1722251151549&ei=j3enZtTqGYyN9u8P1oSEsQg&ved=0ahUKEwiU7uDAjcyHAxWMhv0HHVYCIYYQ4dUDCBA&uact=5&oq=7-habits-of-highly-effective-people+pdf&gs_lp=Egxnd3Mtd2l6LXNlcnAiJzctaGFiaXRzLW9mLWhpZ2hseS1lZmZlY3RpdmUtcGVvcGxlIHBkZjIGEAAYBxgeMgYQABgHGB4yBhAAGAcYHjIGEAAYBxgeMgYQABgHGB4yCxAAGIAEGIYDGIoFMgsQABiABBiGAxiKBTILEAAYgAQYhgMYigUyCxAAGIAEGIYDGIoFMggQABiABBiiBEiZEFCWAlj-DHABeAGQAQCYAZECoAHtEqoBBDItMTC4AQPIAQD4AQGYAgKgAvsBwgIKEAAYsAMY1gQYR5gDAIgGAZAGBZIHBTEuMC4xoAfqYA&sclient=gws-wiz-serp'
             else:
-                most_relevant_book_name = 'https://laithaljunaidy.com/books/assets/files/Good-toGreat_WhySomeCompaniesMaketheLeap...AndOthersDontPDFDrive.pdf'
+                most_relevant_URL = 'https://www.google.com/search?q=good+to+great+pdf&rlz=1C1KNTJ_enPK1063PK1063&oq=good+to+great+pdf&gs_lcrp=EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTIGCAEQRRhAMgoIAhAuGNQCGIAEMgoIAxAuGNQCGIAEMgcIBBAAGIAEMgcIBRAAGIAEMgcIBhAAGIAEMgYIBxBFGDzSAQgzNTM1ajBqN6gCALACAA&sourceid=chrome&ie=UTF-8'
 
-            return jsonify({"reference": most_relevant_book_name, "response": most_relevant_response})
+            return jsonify({"reference": most_relevant_URL, "response": most_relevant_response,"book":most_relevant_book_name})
         else:
             return jsonify({"response": "No relevant information found in any of the PDFs."}), 404
 
     except Exception as e:
         return jsonify({"error": f"Error uploading PDF: {e}"}), 500
+    
+@app.route('/transcribe', methods=['POST'])
+def transcribe():
+    if 'audio' not in request.files:
+        return jsonify({"error": "No audio file provided"}), 400
+
+    audio_file = request.files['audio']
+    print(f"Received file: {audio_file.filename}")
+    print(f"Content-Type: {audio_file.content_type}")
+    print(f"File size: {audio_file.content_length} bytes")
+    
+    # Check the file size (example limit: 25 MB)
+    if audio_file.content_length > 25 * 1024 * 1024:  # 25 MB in bytes
+        return jsonify({"error": "File size exceeds limit"}), 400
+    
+    # Check the file type (based on the content-type header or file extension)
+    allowed_extensions = {'mp3', 'mp4', 'mpeg', 'mpga', 'm4a', 'wav', 'webm'}
+    if not any(audio_file.filename.lower().endswith(ext) for ext in allowed_extensions):
+        return jsonify({"error": "Unsupported file type"}), 400
+
+    audio_bytes = BytesIO(audio_file.read())
+    print("Audio file received and validated")
+
+    try:
+        print(12)
+        # Use pydub to handle the audio file in case conversion is needed
+        audio = AudioSegment.from_file(audio_bytes)
+        temp_wav_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
+        audio.export(temp_wav_file.name, format="wav")
+        
+        # Transcribe using Whisper
+        result = model.transcribe(temp_wav_file.name)
+        transcription = result["text"]
+        print("Transcription result:", transcription)
+        return jsonify({"transcription": transcription}), 200
+    except Exception as e:
+        print(f"Transcription failed: {e}")
+        return jsonify({"error": f"Transcription failed: {e}"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

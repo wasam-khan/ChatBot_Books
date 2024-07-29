@@ -104,7 +104,7 @@ header {
   flex-direction: column;
   justify-content: center;
   position: absolute; /* Position absolute to the relative parent */
-  top: 20%;
+  top: 85%;
   left: 50%;
   /* transform: translate(-50%, -50%); */
   text-align: center;
@@ -132,10 +132,11 @@ header {
 } 
 
 
-.App {
+.app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
+  position: relative;
 }
 
 .content {
@@ -187,4 +188,25 @@ header {
 
 .button svg {
   fill: white;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  margin-top: 10vh;
+}
+
+.query-card {
+  padding: 16px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s;
+}
+
+.query-card:hover {
+  background-color: #e0e0e0;
 }

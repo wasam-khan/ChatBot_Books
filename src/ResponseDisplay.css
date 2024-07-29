@@ -12,7 +12,8 @@
     text-decoration: none;
     color: inherit;
     margin-left: 5px; /* Space between response text and the reference */
-     vertical-align: super; }/* Aligns the circle vertically */
+    vertical-align: super; 
+  }/* Aligns the circle vertically */
   
    .reference-number {
     display: inline-block;

@@ -2,7 +2,7 @@ import React from 'react';
 import './ResponseDisplay.css';
 import { useState, useEffect } from 'react';
 
-function ResponseDisplay({ reference, response }) {
+function ResponseDisplay({ reference, response , book }) {
     const [displayedText, setDisplayedText] = useState("");
     const [index, setIndex] = useState(0);
 
@@ -24,10 +24,13 @@ function ResponseDisplay({ reference, response }) {
         {index === response.length && reference && (
           <p className="reference-link">
             <a href={reference} target="_blank" rel="noopener noreferrer">
-              <span className="reference-number">1</span>
+              <span className="reference-number">1 </span>
+              
             </a>
+            {book}
           </p>
         )}
+        
       </div>
       );
     };
