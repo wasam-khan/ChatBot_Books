@@ -150,10 +150,6 @@ header {
   margin-bottom: 20px;
 }
 
-.loader {
-  text-align: center;
-}
-
 .query-form {
   position: fixed;
   bottom: 0;
@@ -194,8 +190,8 @@ header {
   display: flex;
   justify-content: center;
   gap: 16px;
-  margin-bottom: 16px;
-  margin-top: 10vh;
+  margin-bottom: 5vh;
+  margin-top: 5vh;
 }
 
 .query-card {
