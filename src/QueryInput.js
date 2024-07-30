@@ -20,7 +20,7 @@ function QueryInput({ onSubmit, onAudioRecorded}) {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Enter your query"
+          placeholder="Message..."
         />
                  
         <button type="submit" className="button">

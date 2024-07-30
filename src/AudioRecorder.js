@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import App from './App';
 
 const AudioRecorder = ({ onAudioRecorded }) => {
   const [mediaRecorder, setMediaRecorder] = useState(null);
