@@ -3,6 +3,8 @@ import QueryInput from './QueryInput';
 import ResponseDisplay from './ResponseDisplay';
 import AudioRecorder from './AudioRecorder'; // Import the AudioRecorder component
 import QueryCard from './QueryCard'; // Adjust the path as needed
+// import PdfUpload from './PdfUpload';
+
 
 import axios from 'axios';
 import './App.css';
@@ -99,6 +101,7 @@ const handleQuerySubmit = async (query) => {
         )}
       </div>
       <QueryInput onSubmit={handleQuerySubmit} onAudioRecorded={handleAudioRecorded} />
+      {/* <PdfUpload /> Add the PdfUpload component */}
     </div>
   );
 }
